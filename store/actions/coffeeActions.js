@@ -22,3 +22,24 @@ export const getCoffeeShops = () => dispatch => {
 export const setCoffeeShopsLoading = () => ({
   type: actionTypes.COFFEESHOPS_LOADING
 });
+
+export const addItemToCart = item => {
+  return {
+    type: actionTypes.ADD_ITEM,
+    payload: item
+  };
+};
+
+export const delete_item = item => {
+  return {
+    type: actionTypes.DELETE_ITEM,
+    payload: item
+  };
+};
+
+export const checkout = () => {
+  return {
+    type: actionTypes.CHECKOUT,
+    payload: []
+  };
+};

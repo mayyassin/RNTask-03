@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import * as actionCreators from "../../store/actions/coffeeActions";
 // NativeBase Components
 import {
   Thumbnail,
@@ -26,6 +26,7 @@ class CoffeeDetail extends Component {
       drink: "Coffee",
       option: "Small"
     };
+    this.addDrink = this.addDrink.bind(this);
   }
 
   static navigationOptions = ({ navigation }) => ({
@@ -60,8 +61,19 @@ class CoffeeDetail extends Component {
     });
   }
 
+  addDrink() {
+    let item = {
+      drink: this.state.drink,
+      option: this.state.option,
+      quantity: 1
+    };
+    this.props.addItem(item);
+    console.log(this.props.cart);
+  }
+
   render() {
     const coffeeshop = this.props.navigation.getParam("shop", {});
+
     return (
       <Content>
         <List>
@@ -105,8 +117,8 @@ class CoffeeDetail extends Component {
               </Picker>
             </Body>
           </ListItem>
-          <Button full danger>
-            <Text>Add</Text>
+          <Button full danger onPress={() => this.addDrink()}>
+            <Text>Add {this.props.cart.length}</Text>
           </Button>
         </List>
       </Content>
@@ -115,10 +127,17 @@ class CoffeeDetail extends Component {
 }
 
 const mapStateToProps = state => ({
-  cart: state.cart
+  cart: state.cart.list,
+  newItemId: state.newItemId
 });
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addItem: item => dispatch(actionCreators.addItemToCart(item))
+  };
+};
 
 export default connect(
   mapStateToProps,
-  {}
+  mapDispatchToProps
 )(CoffeeDetail);
