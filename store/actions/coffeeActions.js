@@ -32,7 +32,7 @@ export const addItemToCart = item => {
 
 export const delete_item = item => {
   return {
-    type: actionTypes.DELETE_ITEM,
+    type: actionTypes.REMOVE_ITEM,
     payload: item
   };
 };

@@ -2,7 +2,9 @@ import * as actionTypes from "../actions/types";
 
 const initialState = {
   list: [],
-  newItemId: 1
+  total: 0,
+  newItemId: 1,
+  num: 0
 };
 
 export default function(state = initialState, action) {
@@ -13,6 +15,7 @@ export default function(state = initialState, action) {
       let item = state.list.find(
         item => item.drink === choice.drink && item.option === choice.option
       );
+      state.num = state.num + 1;
       if (item) {
         item.quantity++;
         list = [...state.list];
@@ -21,15 +24,19 @@ export default function(state = initialState, action) {
       }
       return {
         ...state,
-        list: list
+        list: list,
+        total: list.length
       };
 
-    case "DELETE_ITEM":
+    case "REMOVE_ITEM":
+      state.num = state.num - 1;
       return {
         ...state,
-        list: state.list.filter(item => item !== action.payload)
+        list: state.list.filter(item => item !== action.payload),
+        total: state.list.length
       };
     case "CHECKOUT":
+      state.num = 0;
       return {
         ...state,
         list: action.payload
